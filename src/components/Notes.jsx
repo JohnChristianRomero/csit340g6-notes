@@ -18,7 +18,22 @@ const startingNotes = [
  
 
 function Notes() {
-  const [formData, setFormData] = useState({ title: '', body: '' })
+  const [formData, setFormData] = useState(() => {
+    const savedDraft = localStorage.getItem('draft')
+    if (!savedDraft) {
+      return { title: '', body: '' }
+    }
+
+    try {
+      const draft = JSON.parse(savedDraft)
+      return {
+        title: typeof draft.title === 'string' ? draft.title : '',
+        body: typeof draft.body === 'string' ? draft.body : '',
+      }
+    } catch {
+      return { title: '', body: '' }
+    }
+  })
   const [searchTerm, setSearchTerm] = useState('')
   const titleRef = useRef(null)
   const [notes, setNotes] = useState(() => {
