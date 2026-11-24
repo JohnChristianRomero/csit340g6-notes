@@ -1,6 +1,5 @@
 import NoteCard from './NoteCard.jsx'
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'
 
 
 function Notes() {
@@ -11,6 +10,13 @@ function Notes() {
   { id: 2, title: 'Prepare for the quiz', body: 'Practice writing one handler for many inputs.' },
 
 ])
+
+
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes))
+  }, [notes])
+
+
 
   function handleFormChange(event) {
     const { name, value } = event.target
