@@ -1,11 +1,11 @@
-import { useState, useContext } from "react";
+import { useState, useContext, memo } from "react";
 import { SettingsContext } from "../SettingsContext.js";
 
-function NoteCard({ title, body }) {
+function NoteCard({ id, title, body, onDelete }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { largeText } = useContext(SettingsContext);
   return (
-    <div>
+    <div className="relative min-h-32">
       <h3
         className={
           largeText
@@ -35,8 +35,16 @@ function NoteCard({ title, body }) {
       >
         {isExpanded ? "Show less" : "Show more"}
       </button>
+      <button
+        type="button"
+        aria-label={`Delete ${title}`}
+        onClick={() => onDelete(id)}
+        className="absolute top-0 right-0 cursor-pointer text-[26px] leading-none text-[#949494] hover:text-[#c18585]"
+      >
+        ×
+      </button>
     </div>
   );
 }
 
-export default NoteCard;
+export default memo(NoteCard);
