@@ -2,8 +2,6 @@ import NoteCard from './NoteCard.jsx'
 import { useState, useEffect } from 'react'
 
 
-
-
 const startingNotes = [
   {
     id: 1,
@@ -31,6 +29,12 @@ function Notes() {
     localStorage.setItem('notes', JSON.stringify(notes))
   }, [notes])
 
+  useEffect(() => {
+    const id = setTimeout(() =>  {
+      localStorage.setItem('draft', JSON.stringify(formData))
+    }, 1000)
+    return () => clearTimeout(id)
+  }, [formData])
 
 
   function handleFormChange(event) {
